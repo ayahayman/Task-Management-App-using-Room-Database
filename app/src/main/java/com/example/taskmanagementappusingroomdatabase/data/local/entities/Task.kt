@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey
 )
 data class Task(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val taskId: Int = 0,
     val description: String,
     val projectId: Int
 )

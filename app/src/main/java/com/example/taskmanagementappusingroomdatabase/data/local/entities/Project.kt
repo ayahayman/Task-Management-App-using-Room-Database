@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 )
 data class Project(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val projectId: Int = 0,
     val title: String,
     val ownerId: Int
 )

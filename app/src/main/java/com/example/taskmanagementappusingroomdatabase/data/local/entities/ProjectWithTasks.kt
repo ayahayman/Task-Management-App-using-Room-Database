@@ -17,8 +17,8 @@ data class ProjectWithTasks(
     @Embedded
     val project: Project,
     @Relation(
-        parentColumn = "id",
-        entityColumn = "id",
+        parentColumn = "projectId",
+        entityColumn = "taskId",
         associateBy = Junction(
             value = ProjectTaskCrossRef::class,
             parentColumn = "projectId",
@@ -28,14 +28,14 @@ data class ProjectWithTasks(
     val tasks: List<Task>
 )
 
-data class TaskWithProject(
+data class TaskWithProjects(
     @Embedded
     val task: Task,
     @Relation(
-        parentColumn = "id",
-        entityColumn = "id",
+        parentColumn = "taskId",
+        entityColumn = "projectId",
         associateBy = Junction(
-            value = TaskWithProject::class,
+            value = ProjectTaskCrossRef::class,
             parentColumn = "taskId",
             entityColumn = "projectId"
         )

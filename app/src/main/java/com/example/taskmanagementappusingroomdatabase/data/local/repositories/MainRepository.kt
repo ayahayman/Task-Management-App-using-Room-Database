@@ -6,10 +6,11 @@ import com.example.taskmanagementappusingroomdatabase.data.local.dao.TaskDao
 import com.example.taskmanagementappusingroomdatabase.data.local.dao.UserDao
 import com.example.taskmanagementappusingroomdatabase.data.local.entities.Attachment
 import com.example.taskmanagementappusingroomdatabase.data.local.entities.Project
-import com.example.taskmanagementappusingroomdatabase.data.local.entities.ProjectWithTask
+import com.example.taskmanagementappusingroomdatabase.data.local.entities.ProjectWithTasks
 import com.example.taskmanagementappusingroomdatabase.data.local.entities.Task
+import com.example.taskmanagementappusingroomdatabase.data.local.entities.TaskWithAttachments
 import com.example.taskmanagementappusingroomdatabase.data.local.entities.User
-import com.example.taskmanagementappusingroomdatabase.data.local.entities.UserWithProject
+import com.example.taskmanagementappusingroomdatabase.data.local.entities.UserWithProjects
 import kotlinx.coroutines.flow.Flow
 
 class MainRepository(
@@ -18,17 +19,22 @@ class MainRepository(
     private val taskDao: TaskDao,
     private val attachmentDao: AttachmentDao
 ) {
-    suspend fun addUser(user: User): Long = userDao.insertUser(user)
+    suspend fun insertUser(user: User): Int = userDao.insertUser(user).toInt()
 
-    suspend fun addProject(project: Project): Long = projectDao.insertProject(project)
+    suspend fun insertProject(project: Project): Int = projectDao.insertProject(project).toInt()
 
-    suspend fun addTask(task: Task): Long = taskDao.insertTask(task)
+    suspend fun insertTask(task: Task): Int = taskDao.insertTask(task).toInt()
 
-    suspend fun addAttachment(attachment: Attachment): Long = attachmentDao.insertAttachment(attachment)
+    suspend fun insertAttachment(attachment: Attachment): Int = attachmentDao.insertAttachment(attachment).toInt()
+    suspend fun getAllProjectsOnce(): List<Project> = projectDao.getAllProjectsOnce()
 
-    fun getUsersWithProjects(): Flow<List<UserWithProject>> = userDao.getUsersWithProjects()
+    fun getAllProjectsFlow(): Flow<List<Project>> = projectDao.getAllProjectsFlow()
 
-    fun getProjectsWithTasks(): FLow<List<ProjectWithTask>> = projectDao.getProjectWithTasks()
+    fun getUsersWithProjects(): Flow<List<UserWithProjects>> = userDao.getUsersWithProjects()
+
+    fun getProjectsWithTasks(projectId: Int): Flow<List<ProjectWithTasks>> = projectDao.getProjectWithTasks(projectId)
+
+    fun getTasksWithAttachments(): Flow<List<TaskWithAttachments>> = taskDao.getTaskWithAttachments()
 
     suspend fun clearAll() {
         userDao.clearAllUsers()

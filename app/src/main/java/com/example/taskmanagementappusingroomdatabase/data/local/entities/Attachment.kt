@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 )
 data class Attachment(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val attachmentId: Int = 0,
     val filePath: String,
     val taskId: Int
 )
